@@ -11,7 +11,7 @@ export class Books extends React.Component {
 
             (book) => {
 
-                //The book isbn is used as a key meaning that it provides an identity to the elments in the list
+                //The book isbn is used as a key meaning that it provides an identity to the elements in the list
                 return <BookItem book={book} key={book.isbn}></BookItem>
 
             }
