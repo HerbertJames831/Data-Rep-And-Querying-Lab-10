@@ -9,10 +9,8 @@ const Header = () => {
 
             <h1>My Header in another component</h1>
 
-
         </header>
 
     )
-
 }
 export default Header;

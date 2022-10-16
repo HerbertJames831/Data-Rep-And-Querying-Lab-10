@@ -7,6 +7,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/esm/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+
+import { Read } from './components/read';
+import { Create } from './components/create';
+
+
 import {
   BrowserRouter as Router, //Importing react router dom
   Routes,
@@ -28,9 +33,9 @@ class App extends React.Component {
           </Container>
         </Navbar>{/* End Navigation bar */}
         <Routes>  {/* Switching between route elements*/}
-          <Route path="/" element={<Header />} />
-          <Route path="/read" element={<Footer />} />
-          <Route path="/create" element={<Content />} />
+          <Route path="/" element={<Content />} />
+          <Route path="/read" element={<Read />} />
+          <Route path="/create" element={<Create />} />
         </Routes>
       </Router>
     );
