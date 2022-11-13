@@ -1,4 +1,5 @@
-import React from 'react';
+import React from "react";
+import axios from "axios";
 
 export class Create extends React.Component {
     constructor() {
@@ -8,6 +9,8 @@ export class Create extends React.Component {
         this.onChangeBookTitle = this.onChangeBookTitle.bind(this);
         this.onChangeBookCover = this.onChangeBookCover.bind(this);
         this.onChangeBookAuthor = this.onChangeBookAuthor.bind(this);
+
+
         this.state = {
 
             title: '',
@@ -20,9 +23,23 @@ export class Create extends React.Component {
 
         //The preventDefault() method helps to cancel the event if it is cancelable; this means the default action which belongs to the event will not happen
         e.preventDefault();
-        console.log(`${this.state.title},
+        console.log(`Button clicked
+    ${this.state.title},
   ${this.state.cover},
   ${this.state.author}`);
+
+        const book = {
+            title: this.state.title,
+            cover: this.state.cover,
+            author: this.state.author,
+
+        }
+        //The data is sent to an endpoint using the Axios POST method
+        //A promise is returned by the then() method
+        //The catch() method catches the error and does something with the error information when a promise fails
+        axios.post('http://localhost:4000/api/books', book)
+            .then()
+            .catch();
 
     }
     //onChange is an event handler in React that gets triggered whenever the input field for book title is changed
