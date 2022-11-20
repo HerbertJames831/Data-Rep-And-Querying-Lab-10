@@ -14,24 +14,20 @@ export class Read extends React.Component {
                 //setState() assists in enqueuing changes to the component state and informs React that it is essential this component and its children must be re-rendered with the updated state
                 this.setState({
 
-                    books: response.data.mybooks
-
+                    books: response.data
                 })
-
             })
             .catch((error) => {
 
                 console.log(error);
 
             });
-
     }
     //Utilized to carry data about the component 
     state = {
         //List of Information about Books (JSON code)
         books: []
     }
-
     //Helps display specific HTML code inside the specified HTML element
     render() {
 
@@ -44,9 +40,7 @@ export class Read extends React.Component {
                 <Books books={this.state.books}></Books>
 
             </div>
-
         )
-
     }
 }
 

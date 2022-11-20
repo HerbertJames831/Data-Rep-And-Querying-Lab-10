@@ -13,7 +13,23 @@ app.use(function (req, res, next) {
     "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+//The mongoose module is being imported
+const mongoose = require('mongoose');
 
+main().catch(err => console.log(err));
+
+async function main() {
+  //This helps open Mongoose's default connection to MongoDB
+  await mongoose.connect('mongodb+srv://admin:admin@datarepaandqueryinglab7.vslg2my.mongodb.net/?retryWrites=true&w=majority');
+}
+//Creating a new Schema instance using the Schema constructor and defining the title, cover and author fields inside it in the Schema constructor's object parameter
+const bookSchema = new mongoose.Schema({
+  title: String,
+  cover: String,
+  author: String
+});
+//The mongoose.model() function is helpful because a specific database's collection of MongoDB can be created
+const bookModel = mongoose.model('HerbertBooks', bookSchema);
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
@@ -39,9 +55,14 @@ app.get('/', (req, res) => {
 //The POST method is being used to send data to the URL (http://localhost:4000/api/books)
 app.post('/api/books', (req, res) => {
   console.log(req.body);
+  //The create() method is useful for creating single or numerous documents in the collection 
+  bookModel.create({
+    title: req.body.title,
+    cover: req.body.cover,
+    author: req.body.author
+  })
   //Sends HTTP Response
   res.send('Data Received');
-
 })
 //The app.get() function allows a route handler for GET requests to the URL(http://localhost:3000/datarep) be defined
 app.get('/datarep', (req, res) => {
@@ -56,48 +77,19 @@ app.get('/hello/:name', (req, res) => {
 })
 //The app.get() function allows a route handler for GET requests to the URL(http://localhost:3000/api/books) be defined
 app.get('/api/books', (req, res) => {
-
-  //JSON Data
-  const books = [
-    {
-      "title": "Learn Git in a Month of Lunches",
-      "isbn": "1617292419",
-      "pageCount": 0,
-      "thumbnailUrl": "https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/umali.jpg",
-      "status": "MEAP",
-      "authors": ["Rick Umali"],
-      "categories": []
-    },
-    {
-      "title": "MongoDB in Action, Second Edition",
-      "isbn": "1617291609",
-      "pageCount": 0,
-      "thumbnailUrl": "https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/banker2.jpg",
-      "status": "MEAP",
-      "authors": [
-        "Kyle Banker",
-        "Peter Bakkum",
-        "Tim Hawkins",
-        "Shaun Verch",
-        "Douglas Garrett"
-      ],
-      "categories": []
-    },
-    {
-      "title": "Getting MEAN with Mongo, Express, Angular, and Node",
-      "isbn": "1617292036",
-      "pageCount": 0,
-      "thumbnailUrl": "https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/sholmes.jpg",
-      "status": "MEAP",
-      "authors": ["Simon Holmes"],
-      "categories": []
-    }
-  ]
-  //A JSON response is sent
-  res.json({
-
-    mybooks: books,
-    message: 'Hello from the server'
+  //The find() function is utilized to find specific data from the MongoDB database
+  bookModel.find((error, data) => {
+    //Sends a JSON response
+    res.json(data)
+  })
+})
+//The app.get() function lets a route handler for GET requests to the URL(http://localhost:4000/api/book/:id) be defined
+app.get('/api/book/:id', (req, res) => {
+  console.log(req.params.id);
+  //The findById() function is benefical for finding a single document by its _id
+  bookModel.findById(req.params.id, (error, data) => {
+    //Sends a JSON response
+    res.json(data);
   })
 })
 //The app.get() function lets a route handler for GET requests to the URL(http://localhost:3000/test) be defined

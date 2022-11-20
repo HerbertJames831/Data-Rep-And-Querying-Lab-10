@@ -10,28 +10,23 @@ export class BookItem extends React.Component {
       <div>
         {/* Displaying all info inside a card */}
         <Card>
+          {/* This contains the book title */}
           <Card.Header >{this.props.book.title}</Card.Header>
           <Card.Body>
 
             <blockquote className="blockquote mb-0">
-              {/* This contains all the books thumbnail */}
-              <img src={this.props.book.thumbnailUrl}></img>
+              {/* This contains the book cover */}
+              <img src={this.props.book.cover}></img>
 
               <footer>
-                {/* This contains all the names of all the book authors */}
-                {this.props.book.authors[0]}
+                {/* This contains the name of the book author */}
+                {this.props.book.author}
 
               </footer>
-
             </blockquote>
-
-
           </Card.Body>
-
         </Card>
       </div>
-
     );
   }
-
 }
