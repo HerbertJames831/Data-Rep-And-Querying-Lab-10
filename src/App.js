@@ -7,10 +7,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/esm/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-
 import { Read } from './components/read';
 import { Create } from './components/create';
-
+import { Edit } from './components/edit';
 
 import {
   BrowserRouter as Router, //Importing react router dom
@@ -36,6 +35,7 @@ class App extends React.Component {
           <Route path="/" element={<Content />} />
           <Route path="/read" element={<Read />} />
           <Route path="/create" element={<Create />} />
+          <Route path="/edit/:id" element={<Edit />} />
         </Routes>
       </Router>
     );

@@ -92,6 +92,15 @@ app.get('/api/book/:id', (req, res) => {
     res.json(data);
   })
 })
+//The HTTP PUT requests are being routed to the specified path along with the specified callback functions using the app.put() function
+app.put('/api/book/:id', (req, res) => {
+  console.log("Update" + req.params.id);
+  //The findById() function is benefical for finding a single document by its _id
+  bookModel.findByIdAndUpdate(req.params.id, req.body, { new: true }, (error, data) => {
+    //Sends a JSON response
+    res.json(data);
+  })
+})
 //The app.get() function lets a route handler for GET requests to the URL(http://localhost:3000/test) be defined
 app.get('/test', (req, res) => {
 
