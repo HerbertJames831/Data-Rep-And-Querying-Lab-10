@@ -95,10 +95,21 @@ app.get('/api/book/:id', (req, res) => {
 //The HTTP PUT requests are being routed to the specified path along with the specified callback functions using the app.put() function
 app.put('/api/book/:id', (req, res) => {
   console.log("Update" + req.params.id);
-  //The findById() function is benefical for finding a single document by its _id
+  //The findByIdAndUpdate() function is useful for finding a matching document, updates it according to the update arg, any options are passed and the found document(if there are any) is returned to the callback.
+  //The findByIdAndUpdate() function is known to return the document as it was prior to update being applied by default. { new: true } permits the user to set the option to true to allow the document to be returned after update was applied. 
   bookModel.findByIdAndUpdate(req.params.id, req.body, { new: true }, (error, data) => {
     //Sends a JSON response
     res.json(data);
+  })
+})
+//The app.delete() method is beneficial for routing all the HTTP DELETE requests to the specified path along with the specified callback functions
+app.delete('/api/book/:id', (req, res) => {
+
+  console.log("Deleting: " + req.params.id);
+  //The findByIdAndDelete() function is helpful for finding a single document by its _id and subsequently the document is removed from the collection. The document is returned deleted.
+  bookModel.findByIdAndDelete({ _id: req.params.id }, (error, data) => {
+    //Sends HTTP Response
+    res.send(data);
   })
 })
 //The app.get() function lets a route handler for GET requests to the URL(http://localhost:3000/test) be defined
