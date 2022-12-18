@@ -35,6 +35,13 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
+//The path module is useful for providing utilities for working with directory and file paths
+//The path.join() method is utilized to join specified path segments into one path
+//app.use(express.static()) adds a middleware which is beneficial for serving static files to an Express app
+const path = require('path');
+app.use(express.static(path.join(__dirname, '../../build')));
+app.use('/static', express.static(path.join(__dirname, 'build//static')));
+
 /**
  * req stands for Request
  * A client makes a HTTP request to a named host which is located on a server
@@ -112,6 +119,13 @@ app.delete('/api/book/:id', (req, res) => {
     res.send(data);
   })
 })
+// Handles any requests that don't match the ones above
+// The path.join() method is utilized to join specified path segments into one path
+// The res.sendFile() method is utilized to serve static files
+// The res.sendFile() method only accepts absolute paths. An absolute path is known for always containing the root element and the complete directory list that are required to locate the file.   
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/../../build/index.html'));
+});
 //The app.get() function lets a route handler for GET requests to the URL(http://localhost:3000/test) be defined
 app.get('/test', (req, res) => {
 
